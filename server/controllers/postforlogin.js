@@ -37,6 +37,7 @@ dotenv.config();
  
  const signupuser=async (req, res) => {
     const {username, password} = req.body;
+    console.log("Request Body:", req.body);
     try {
     // Validate input
     if (!username || !password) {
@@ -44,19 +45,17 @@ dotenv.config();
     }
 
     // Check if user exists
-    const user = await User.findOne({username});
+    const user = await User.findOne({username,password});
     if (user) {
-      return res.status(404).json({ message: 'User already exist. Do login' });
+    if (user.password == password) {
+  return res.status(401).json({ message: 'User already exist. Do login' });
+  }
     }
-    if (user.password !== password) {
-  return res.status(401).json({ message: 'Invalid password' });
-}
     // Create a new post
     const newuser= new User({
       username,
       password
     });
-   console.log("Happy");
     await newuser.save();
     // Respond with success message
     res.status(201).json({ message: 'User created successfully' });
