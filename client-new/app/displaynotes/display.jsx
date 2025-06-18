@@ -1,6 +1,6 @@
 "use client";
 import { Button } from '@/components/ui/button';
-const SERVER_URL = 'http://localhost:5000';
+
 const Display = ({token,setNoteText,notes,fetchNotes}) => {
   
        const handleEdit = (note) => {
@@ -12,7 +12,7 @@ const Display = ({token,setNoteText,notes,fetchNotes}) => {
     if (!confirmDelete) return;
     try { 
 
-      const res = await fetch(`${SERVER_URL}/api/deletenote/${id}`, {
+      const res = await fetch(`/api/deletenotebyid/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -35,10 +35,10 @@ const Display = ({token,setNoteText,notes,fetchNotes}) => {
   return (
      
      <div className="w-full max-w-xl space-y-4">
-      Hello yaar
+  
         {notes.map((note) => (
           <div
-            key={note._id}
+            key={note.id}
             className="bg-[#1e1e1e] border border-pink-400 rounded-lg p-4 shadow flex justify-between items-start"
           >
             <div
@@ -56,7 +56,7 @@ const Display = ({token,setNoteText,notes,fetchNotes}) => {
               </Button>
               <Button
                 className="bg-red-500 text-white px-3 py-1 rounded hover:opacity-90"
-                onClick={() => handleDelete(note._id)}
+                onClick={() => handleDelete(note.id)}
               >
                 Delete
               </Button>
@@ -64,7 +64,6 @@ const Display = ({token,setNoteText,notes,fetchNotes}) => {
           </div>
         ))}
       </div>
-   
-  )
-}
+  
+  )};
 export default Display;

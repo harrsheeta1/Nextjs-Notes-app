@@ -3,7 +3,6 @@ import { useState,useEffect } from 'react';
 import {Button} from '@/components/ui/button';
 import {Textarea} from '@/components/ui/textarea';
 import Display from '../displaynotes/display';
-const SERVER_URL = 'http://localhost:5000';
 
 const page = () => {
   const [noteText, setNoteText] = useState('');
@@ -21,9 +20,9 @@ const page = () => {
     fetchNotes();
   }
 }, [token]);
-
+  
     const fetchNotes = async () => {
-     const res = await fetch(`${SERVER_URL}/api/getnotes`, {
+     const res = await fetch('/api/getnotes', {
       headers: { Authorization: `Bearer ${token}` ,
                 'Content-Type': 'application/json'},
       method:'GET',
@@ -50,7 +49,7 @@ const page = () => {
       return;
     }
     try {
-      const response = await fetch(`${SERVER_URL}/api/addnote`, {
+      const response = await fetch('/api/addnote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,16 +83,19 @@ const page = () => {
       alert('Ok, cancelling the request for delete');
       return;
     }
-      const res = await fetch(`${SERVER_URL}/api/deletenote`, {
-      method: 'POST',
+      const res = await fetch('/api/deletenote', {
+      method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ noteText }),
     });
-
-    const data = await res.json();
+   
+     let data;
+    if (res.headers.get('Content-Type')?.includes('application/json')) {
+      data = await res.json();
+    }
     if (res.ok) {
       alert('Delete successful!');
       fetchNotes(); 

@@ -4,7 +4,7 @@ import {Button} from '@/components/ui/button';
 import { Input } from '@/components/ui/input'; 
 import  React from 'react';
 import { useRouter } from 'next/navigation'; 
-const SERVER_URL = "http://localhost:5000";
+
 const login=()=>
 {   const [isLogin, setIsLogin] = useState(false);
     const [username, setUsername] = useState("");
@@ -13,7 +13,7 @@ const login=()=>
     const handleSubmit = async () => {
     const endpoint = isLogin ? '/api/login' : '/api/signup';
 
-    const res = await fetch(`${SERVER_URL}${endpoint}`, {
+    const res = await fetch(endpoint,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
