@@ -11,23 +11,6 @@ router.post('/deletenote',verifytoken, deleteNote);
 router.post('/addnote',verifytoken, addNote);
 router.get('/getnotes', verifytoken, getall);
 router.delete('/deletenote/:id', verifytoken, async (req, res) => {
-  // try {
-  //   const noteId = req.params.id;
-  //   const userId = req.user.id;
-
-  //   // Find the note by ID and ensure it belongs to the user
-  //   const note = await Post.findOne({ _id: noteId, user: userId });
-  //   if (!note) {
-  //     return res.status(404).json({ message: 'Note not found' });
-  //   }
-
-  //   // Delete the note
-  //   await Post.deleteOne({ _id: noteId ,user: userId});
-  //   res.status(200).json({ message: 'Note deleted successfully' });
-  // } catch (error) {
-  //   console.error('Error deleting note:', error);
-  //   res.status(500).json({ message: 'Server error while deleting note' });
-  // }
 
    try {
     const noteId = req.params.id;
